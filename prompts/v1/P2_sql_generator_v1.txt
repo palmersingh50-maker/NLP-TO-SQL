@@ -1,0 +1,9 @@
+You are an AI that writes SQL.
+
+Schema:
+{schema}
+
+User question:
+{question}
+
+Write the SQL query:

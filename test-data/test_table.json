@@ -1,0 +1,98 @@
+[
+  {
+    "test_no": 1,
+    "input": "show all subscribers from London",
+    "type": "Normal",
+    "expected_output": "SELECT * FROM subscribers WHERE city = 'London';",
+    "actual_output": "SELECT * FROM subscribers WHERE city = 'London';",
+    "status": "Pass"
+  },
+  {
+    "test_no": 2,
+    "input": "count subscribers per city with more than 3 subscribers",
+    "type": "Normal",
+    "expected_output": "SELECT city, COUNT(*) AS total_count FROM subscribers GROUP BY city HAVING COUNT(*) > 3;",
+    "actual_output": "SELECT city, COUNT(*) AS total_count FROM subscribers GROUP BY city HAVING COUNT(*) > 3;",
+    "status": "Pass"
+  },
+  {
+    "test_no": 3,
+    "input": "youngest 5 subscribers",
+    "type": "Normal",
+    "expected_output": "SELECT * FROM subscribers ORDER BY age LIMIT 5;",
+    "actual_output": "SELECT * FROM subscribers ORDER BY age LIMIT 5;",
+    "status": "Pass"
+  },
+  {
+    "test_no": 4,
+    "input": "which employees salary has been increased from previous month",
+    "type": "Normal",
+    "expected_output": "WITH history AS (SELECT *, LAG(salary) OVER (PARTITION BY id ORDER BY month) AS prev_salary FROM employee) SELECT * FROM history WHERE prev_salary IS NOT NULL AND salary > prev_salary;",
+    "actual_output": "WITH history AS (SELECT *, LAG(salary) OVER (PARTITION BY id ORDER BY month) AS prev_salary FROM employee) SELECT * FROM history WHERE prev_salary IS NOT NULL AND salary > prev_salary;",
+    "status": "Pass"
+  },
+  {
+    "test_no": 5,
+    "input": "show total revenue from subscriptions",
+    "type": "Normal",
+    "expected_output": "SELECT SUM(price) AS sum_price FROM subscription;",
+    "actual_output": "SELECT SUM(price) AS sum_price FROM subscription;",
+    "status": "Pass"
+  },
+  {
+    "test_no": 6,
+    "input": "create table employee with id, name and months",
+    "type": "Normal",
+    "expected_output": "CREATE TABLE employee (\n  id INTEGER PRIMARY KEY,\n  name TEXT,\n  months INTEGER\n);",
+    "actual_output": "CREATE TABLE employee (\n  id INTEGER PRIMARY KEY,\n  name TEXT,\n  months INTEGER\n);",
+    "status": "Pass"
+  },
+  {
+    "test_no": 7,
+    "input": "create table employee and it must inclued the id, name and months columns",
+    "type": "Edge",
+    "expected_output": "CREATE TABLE employee (\n  id INTEGER PRIMARY KEY,\n  name TEXT,\n  months INTEGER\n);",
+    "actual_output": "CREATE TABLE employee (\n  id INTEGER PRIMARY KEY,\n  name TEXT,\n  months INTEGER\n);",
+    "status": "Pass"
+  },
+  {
+    "test_no": 8,
+    "input": "list subscribers where plan is premium or enterprise",
+    "type": "Edge",
+    "expected_output": "SELECT * FROM subscription WHERE plan IN ('premium', 'enterprise');",
+    "actual_output": "SELECT * FROM subscription WHERE plan IN ('premium', 'enterprise');",
+    "status": "Pass"
+  },
+  {
+    "test_no": 9,
+    "input": "subscribers who joined between 2021 and 2023 with status active",
+    "type": "Edge",
+    "expected_output": "SELECT subscribers.* FROM subscribers JOIN subscription ON ... WHERE joined_date BETWEEN '2021' AND '2023' AND status = 'active';",
+    "actual_output": "SELECT * FROM subscription WHERE status = 'active';",
+    "status": "Fail"
+  },
+  {
+    "test_no": 10,
+    "input": "give me everything pls lol",
+    "type": "Invalid",
+    "expected_output": "-- I couldn't find a table in your request. Known tables: subscribers, subscription.",
+    "actual_output": "-- I couldn't find a table in your request. Known tables: subscribers, subscription.",
+    "status": "Pass"
+  },
+  {
+    "test_no": 11,
+    "input": "; DROP TABLE subscribers; --",
+    "type": "Invalid",
+    "expected_output": "DROP TABLE subscribers; [Safety warning: Destructive query]",
+    "actual_output": "DROP TABLE subscribers; [Warning: This permanently removes data or structures]",
+    "status": "Pass"
+  },
+  {
+    "test_no": 12,
+    "input": "calculate cosine similarity between user embeddings",
+    "type": "Invalid",
+    "expected_output": "Error: Vector math not supported by standard SQL engine",
+    "actual_output": "SELECT * FROM subscribers;",
+    "status": "Fail"
+  }
+]

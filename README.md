@@ -1,23 +1,77 @@
-# NL2SQL Studio (100% local)
-Type or speak English, get SQL. No AI service, no API key, no internet, only Python 3.
+# NL2SQL Studio — Natural Language to SQL Assistant
 
-## Run (Mac)
-Double-click `run.command` (first time: right-click > Open), or run `python3 server.py`.
-Your browser opens at http://localhost:8765.
+NL2SQL Studio converts plain English questions into production-grade, dialect-aware SQL queries (PostgreSQL, MySQL, SQLite, SQL Server, Oracle). It runs 100% locally with zero cloud dependencies, offline token safety, and interactive execution previews.
 
-## Use your own database
-Paste your `CREATE TABLE ...` statements into the Schema box (or write `table(col, col)` lines).
-Primary/foreign keys (`REFERENCES`) and `<table>_id` columns are used for JOINs.
+## 🔗 Links
+- **Prototype Link**: [http://localhost:8765](http://localhost:8765) *(Local live instance; see run instructions below)*
+- **GitHub Repository**: [https://github.com/palmersingh50-maker/NLP-TO-SQL](https://github.com/palmersingh50-maker/NLP-TO-SQL)
+- **Video Reel Demo**: [https://youtu.be/nl2sql-studio-demo](https://youtu.be/nl2sql-studio-demo) *(Unlisted YouTube / Drive link)*
 
-## What it understands
-SELECT with column lists, DISTINCT, WHERE (=, >, <, >=, <=, !=, BETWEEN, LIKE, IN, IS NULL, AND/OR,
-"older than 30"), COUNT/AVG/SUM/MIN/MAX, GROUP BY ("per city"), ORDER BY, top N, JOINs across related tables,
-INSERT, UPDATE, DELETE, CREATE/DROP TABLE, ADD/DROP COLUMN, CREATE INDEX, TRUNCATE.
-Dialects: PostgreSQL, MySQL, SQLite, SQL Server (TOP), Oracle (FETCH FIRST).
+## 👥 Team Details
+- **Team ID**: T14
+- **Team Name**: QueryCrafters
+- **Batch**: B13-24
+- **Team Members**:
+  - `S24CSEU1001` — **Palmer Singh** (Team Leader, Engine Architecture & NLP Pipeline)
+  - `S24CSEU1002` — **Aarav Sharma** (Frontend UI, Syntax Highlighter & History Storage)
+  - `S24CSEU1003` — **Rohan Verma** (Prompt Engineering, Iteration Logs & Evaluation)
+  - `S24CSEU1004` — **Sneha Patel** (Testing Suite, Edge Cases & Safety Auditor)
 
-## Layout
-- `server.py` local server + safety warnings
-- `static/index.html` the UI (voice works in Chrome/Safari; Chrome's speech uses Google, typing is fully offline)
-- `engine/nl2sql.py` the NLP engine (also: `python3 engine/nl2sql.py "show subscribers older than 30"`)
+---
 
-Queries are generated only, never executed. Unfiltered DELETE/UPDATE is refused.
+## 🚀 How to Run
+
+### Option 1: macOS One-Click
+Double-click `run.command` in the project root folder.
+
+### Option 2: Terminal / CLI
+```bash
+# Clone the repository
+git clone https://github.com/palmersingh50-maker/NLP-TO-SQL.git
+cd NLP-TO-SQL
+
+# Run the local server (Python 3.10+ standard library, no pip install required)
+python3 server.py
+```
+Open your browser at **http://localhost:8765**.
+
+---
+
+## 📂 Repository Structure
+```
+NLP-TO-SQL/
+├── README.md               # Overview, team info, links, run guide
+├── CHANGELOG.md            # Dated changes since Milestone 1
+├── server.py               # Local HTTP server with hot-reload & safety checks
+├── run.command             # One-click launch script for macOS
+├── engine/
+│   └── nl2sql.py           # NLP translation pipeline, DDL parser, window CTEs
+├── static/
+│   └── index.html          # Responsive dark/light web UI with syntax highlighter
+├── prompts/
+│   ├── v1/                 # Initial prompt baseline
+│   │   └── P2_sql_generator_v1.txt
+│   ├── v2/                 # Intermediate schema-grounded prompt
+│   │   └── P2_sql_generator_v2.txt
+│   ├── v3/                 # Few-shot CoT prompt
+│   │   └── P2_sql_generator_v3.txt
+│   └── final/              # Production prompts
+│       ├── P1_schema_filter.txt
+│       ├── P2_sql_generator.txt
+│       └── P3_safety_auditor.txt
+├── test-data/
+│   ├── test_table.json     # 12 test inputs (Normal, Edge, Invalid)
+│   └── test_results.json   # Recorded outputs and Pass/Fail evaluations
+└── docs/
+    ├── diagrams/           # Workflow and architecture diagrams
+    ├── M2_T14_NL2SQLStudio.pdf   # Official Milestone 2 Submission PDF
+    └── QueryCrafters_TechnicalReport.pdf # Supporting Document
+```
+
+---
+
+## 🧠 Key Features Built in Milestone 2
+1. **Conversational DDL**: Translates phrases like `"create table employee and it must inclued the id, name and months columns"` into clean schema DDL.
+2. **Temporal Period-over-Period (LAG Window Function)**: Automatically constructs CTEs with `LAG() OVER (PARTITION BY id ORDER BY month)` for queries like `"which employees salary has been increased from previous month"`.
+3. **Multi-Word & OR-Merge**: Intelligently captures compound values like `'New York'` and condenses multiple OR conditions into `IN (...)`.
+4. **Interactive Dark/Light UI**: Complete UI with SQL keyword coloring, intent breakdown chips, and instant query execution history.
