@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NL2SQL Studio</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--text:#1b1f27;--muted:#6b7280;--line:#e3e6ec;--accent:#4f46e5;--accent-t:#fff;--code:#0f172a;--code-t:#e2e8f0;--warn-bg:#fef3c7;--warn-t:#92400e}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1116;--card:#171b22;--text:#e8eaf0;--muted:#8b93a3;--line:#2a303b;--accent:#818cf8;--accent-t:#0e1116;--code:#0a0d12;--code-t:#e2e8f0;--warn-bg:#3b2f0b;--warn-t:#fcd34d}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+main{max-width:860px;margin:0 auto;padding:32px 20px 60px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+h1{font-size:22px;margin:0}
+.badge{font-size:12px;padding:3px 10px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+textarea,select{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px;font:inherit}
+textarea{resize:vertical;min-height:90px}
+textarea:focus,select:focus{outline:2px solid var(--accent);outline-offset:0}
+.row{display:flex;gap:10px;margin-top:12px;align-items:center;flex-wrap:wrap}
+.row select{width:auto}
+.sp{flex:1}
+button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--text);padding:9px 16px;border-radius:10px;cursor:pointer}
+button.primary{background:var(--accent);color:var(--accent-t);border-color:var(--accent);font-weight:600}
+button:disabled{opacity:.5;cursor:wait}
+button.rec{border-color:#ef4444;color:#ef4444}
+pre{margin:0;background:var(--code);color:var(--code-t);padding:16px;border-radius:10px;overflow-x:auto;font:14px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap}
+.warn{background:var(--warn-bg);color:var(--warn-t);padding:10px 14px;border-radius:10px;margin-bottom:12px}
+.muted{color:var(--muted);font-size:13px}
+label{font-weight:600;font-size:13px;display:block;margin-bottom:6px}
+.hist{display:block;width:100%;text-align:left;margin-top:8px}
+details summary{cursor:pointer;font-weight:600}
+#out{display:none}
+</style>
+</head>
+<body>
+<main>
+<header><h1>NL2SQL Studio</h1><span class="badge" id="engine">Local engine · no AI · offline</span></header>
+
+<div class="card">
+  <label for="q">Say or type anything SQL-related</label>
+  <textarea id="q" placeholder="Type or speak any SQL request in plain English…"></textarea>
+  <div class="row">
+    <select id="dialect"><option>PostgreSQL</option><option>MySQL</option><option>SQLite</option><option>SQL Server</option><option>Oracle</option></select>
+    <button id="mic" title="Speak">🎤 Speak</button>
+    <span class="sp"></span>
+    <span class="muted">⌘/Ctrl + Enter</span>
+    <button class="primary" id="go">Generate SQL</button>
+  </div>
+</div>
+
+<div class="card" id="out">
+  <div id="warns"></div>
+  <pre id="sql"></pre>
+  <p class="muted" id="exp"></p>
+  <div class="row" style="margin-top:0"><button id="copy">Copy SQL</button></div>
+</div>
+
+<div class="card">
+  <details open>
+    <summary>Schema (replace with your own tables)</summary>
+    <p class="muted">Paste your CREATE TABLE statements (keys and REFERENCES are used for JOINs). Saved in this browser.</p>
+    <textarea id="schema" style="min-height:140px" placeholder="CREATE TABLE subscribers (id INT, name TEXT, email TEXT, age INT, city TEXT);&#10;CREATE TABLE subscription (id INT, subscriber_id INT, plan TEXT, status TEXT, price NUMERIC);"></textarea>
+  </details>
+</div>
+
+<div class="card">
+  <strong>History</strong>
+  <div id="hist"><p class="muted">Nothing yet.</p></div>
+</div>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const store = {
+  get(k, d){ try { return JSON.parse(localStorage.getItem(k)) ?? d } catch { return d } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)) } catch {} }
+};
+$('schema').value = store.get('schema', '');
+$('dialect').value = store.get('dialect', 'PostgreSQL');
+$('schema').oninput = () => store.set('schema', $('schema').value);
+$('dialect').onchange = () => store.set('dialect', $('dialect').value);
+
+fetch('/api/status').then(r => r.json()).then(s => {
+  if (!$('schema').value.trim()) { $('schema').value = s.sample_schema; store.set('schema', s.sample_schema) }
+}).catch(() => $('engine').textContent = 'server offline');
+
+function renderHist(){
+  const h = store.get('hist', []);
+  $('hist').innerHTML = h.length ? '' : '<p class="muted">Nothing yet.</p>';
+  h.forEach(t => { const b = document.createElement('button'); b.className = 'hist'; b.textContent = t; b.onclick = () => { $('q').value = t; $('q').focus() }; $('hist').appendChild(b) });
+}
+renderHist();
+
+async function generate(){
+  const text = $('q').value.trim(); if (!text) return;
+  $('go').disabled = true; $('go').textContent = 'Thinking…';
+  try {
+    const r = await fetch('/api/translate', { method: 'POST', body: JSON.stringify({ text, schema: $('schema').value, dialect: $('dialect').value }) });
+    const d = await r.json();
+    $('sql').textContent = d.sql;
+    $('exp').textContent = d.explanation || '';
+    $('warns').innerHTML = '';
+    (d.warnings || []).forEach(w => { const el = document.createElement('div'); el.className = 'warn'; el.textContent = '⚠ ' + w; $('warns').appendChild(el) });
+    $('out').style.display = 'block';
+    const h = [text, ...store.get('hist', []).filter(x => x !== text)].slice(0, 15);
+    store.set('hist', h); renderHist();
+  } catch (e) { $('sql').textContent = '-- Error: ' + e.message; $('out').style.display = 'block' }
+  $('go').disabled = false; $('go').textContent = 'Generate SQL';
+}
+$('go').onclick = generate;
+$('q').addEventListener('keydown', e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) generate() });
+$('copy').onclick = async () => { await navigator.clipboard.writeText($('sql').textContent); $('copy').textContent = 'Copied ✓'; setTimeout(() => $('copy').textContent = 'Copy SQL', 1200) };
+
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (!SR) { $('mic').style.display = 'none' } else {
+  const rec = new SR(); rec.lang = 'en-US'; rec.interimResults = true; let on = false;
+  rec.onresult = e => { $('q').value = [...e.results].map(r => r[0].transcript).join(' ') };
+  rec.onend = () => { on = false; $('mic').classList.remove('rec'); $('mic').textContent = '🎤 Speak'; if ($('q').value.trim()) generate() };
+  $('mic').onclick = () => { if (on) { rec.stop() } else { $('q').value = ''; rec.start(); on = true; $('mic').classList.add('rec'); $('mic').textContent = '⏹ Stop' } };
+}
+</script>
+</body>
+</html>
