@@ -1,10 +1,11 @@
 """NL2SQL Studio - 100% local. No AI, no internet. Run: python3 server.py"""
-import json, os, re, sys, threading, webbrowser
+import json, os, re, sys, threading, webbrowser, importlib
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 
 ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT / "engine"))
+import nl2sql
 from nl2sql import translate, SAMPLE_SCHEMA
 
 PORT = int(os.environ.get("PORT", "8765"))
@@ -33,7 +34,8 @@ class H(BaseHTTPRequestHandler):
     def do_POST(self):
         d = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
         try:
-            res = translate(d.get("text", ""), d.get("schema", ""), d.get("dialect", "PostgreSQL"))
+            importlib.reload(nl2sql)
+            res = nl2sql.translate(d.get("text", ""), d.get("schema", ""), d.get("dialect", "PostgreSQL"))
         except Exception as e:
             res = {"sql": f"-- Could not understand that request ({e}).", "explanation": "Try rephrasing, or check the Schema box."}
         res["warnings"] = risks(res["sql"])
@@ -43,5 +45,10 @@ class H(BaseHTTPRequestHandler):
 if __name__ == "__main__":
     url = f"http://localhost:{PORT}"
     print(f"NL2SQL Studio running at {url}  (Ctrl+C to stop)")
-    threading.Timer(0.8, lambda: webbrowser.open(url)).start()
-    ThreadingHTTPServer(("127.0.0.1", PORT), H).serve_forever()
+    try:
+        threading.Timer(0.8, lambda: webbrowser.open(url)).start()
+    except Exception:
+        pass
+    ThreadingHTTPServer.allow_reuse_address = True
+    httpd = ThreadingHTTPServer(("127.0.0.1", PORT), H)
+    httpd.serve_forever()
