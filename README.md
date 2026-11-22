@@ -5,7 +5,7 @@ NL2SQL Studio converts plain English questions into production-grade, dialect-aw
 ## 🔗 Links
 - **Prototype Link**: [http://localhost:8765](http://localhost:8765) *(Local live instance; see run instructions below)*
 - **GitHub Repository**: [https://github.com/palmersingh50-maker/NLP-TO-SQL](https://github.com/palmersingh50-maker/NLP-TO-SQL)
-- **Video Reel Demo**: [https://youtu.be/nl2sql-studio-demo](https://youtu.be/nl2sql-studio-demo) *(Unlisted YouTube / Drive link)*
+- **Video Reel Demo**: [https://drive.google.com/file/d/1Vswp081gceSOKoQKcdLXIBzH5k_Gwkaq/view?usp=drive_link](https://drive.google.com/file/d/1Vswp081gceSOKoQKcdLXIBzH5k_Gwkaq/view?usp=drive_link)
 
 ## 👥 Team Details
 - **Team ID**: T14

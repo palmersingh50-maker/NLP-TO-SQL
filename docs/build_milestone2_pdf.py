@@ -110,7 +110,7 @@ def generate_milestone2_pdf(filepath):
         [Paragraph("Course Faculty:", styles['CoverLabel']), Paragraph("Dr. Sonal Sharma (SCSE4041)", styles['CoverVal'])],
         [Paragraph("Prototype Link (Q11):", styles['CoverLabel']), Paragraph("<u>http://localhost:8765</u> (Local Live Server; Hosted: <u>https://palmersingh50-nl2sql.hf.space</u>)", styles['CoverVal'])],
         [Paragraph("GitHub Repository (Q12):", styles['CoverLabel']), Paragraph("<u>https://github.com/palmersingh50-maker/NLP-TO-SQL</u>", styles['CoverVal'])],
-        [Paragraph("Video Reel Link (Q13):", styles['CoverLabel']), Paragraph("<u>https://youtu.be/nl2sql-studio-demo</u> (Duration: <b>118 seconds</b>)", styles['CoverVal'])],
+        [Paragraph("Video Reel Link (Q13):", styles['CoverLabel']), Paragraph("<u>https://drive.google.com/file/d/1Vswp081gceSOKoQKcdLXIBzH5k_Gwkaq/view?usp=drive_link</u>", styles['CoverVal'])],
     ]
     
     t_cover = Table(cover_info, colWidths=[150, 354])
