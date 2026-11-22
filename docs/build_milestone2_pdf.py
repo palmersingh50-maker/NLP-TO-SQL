@@ -126,12 +126,12 @@ def generate_milestone2_pdf(filepath):
     story.append(Paragraph("<b>Team Members (Enrollment & Roles)</b>", styles['SubSecHeading']))
     members_data = [
         [Paragraph("Enrollment No.", styles['TableHead']), Paragraph("Member Name", styles['TableHead']), Paragraph("Assigned Role", styles['TableHead']), Paragraph("Main Task Ownership", styles['TableHead'])],
-        [Paragraph("S24CSEU1001", styles['TableCellCenter']), Paragraph("Palmer Singh", styles['TableCellBold']), Paragraph("Team Leader / NLP Engineer", styles['TableCell']), Paragraph("Core engine architecture, LAG() window functions, conversational DDL", styles['TableCell'])],
-        [Paragraph("S24CSEU1002", styles['TableCellCenter']), Paragraph("Aarav Sharma", styles['TableCellBold']), Paragraph("Frontend / Full-Stack", styles['TableCell']), Paragraph("Interactive web studio, syntax highlighting, query history storage", styles['TableCell'])],
-        [Paragraph("S24CSEU1003", styles['TableCellCenter']), Paragraph("Rohan Verma", styles['TableCellBold']), Paragraph("Prompt Engineer", styles['TableCell']), Paragraph("Prompt sheets P1-P3, prompt iteration logs, benchmark evaluations", styles['TableCell'])],
-        [Paragraph("S24CSEU1004", styles['TableCellCenter']), Paragraph("Sneha Patel", styles['TableCellBold']), Paragraph("QA & Safety Engineer", styles['TableCell']), Paragraph("12-case test suite, edge-case evaluation, safety auditor rules", styles['TableCell'])],
+        [Paragraph("S24CSEU2171", styles['TableCellCenter']), Paragraph("Maulik Mani Awasthi", styles['TableCellBold']), Paragraph("Frontend / Full-Stack", styles['TableCell']), Paragraph("Interactive web studio, syntax highlighting, query history storage", styles['TableCell'])],
+        [Paragraph("S24CSEU2161", styles['TableCellCenter']), Paragraph("Arjit Jain", styles['TableCellBold']), Paragraph("Prompt Engineer", styles['TableCell']), Paragraph("Prompt sheets P1-P3, prompt iteration logs, benchmark evaluations", styles['TableCell'])],
+        [Paragraph("S24CSEU2165", styles['TableCellCenter']), Paragraph("Palmer Singh Soodan", styles['TableCellBold']), Paragraph("Team Leader / NLP Engineer", styles['TableCell']), Paragraph("Core engine architecture, LAG() window functions, conversational DDL", styles['TableCell'])],
+        [Paragraph("S24CSEU2882", styles['TableCellCenter']), Paragraph("Raghav Chandra", styles['TableCellBold']), Paragraph("QA & Safety Engineer", styles['TableCell']), Paragraph("12-case test suite, edge-case evaluation, safety auditor rules", styles['TableCell'])],
     ]
-    t_members = Table(members_data, colWidths=[75, 95, 115, 219])
+    t_members = Table(members_data, colWidths=[75, 105, 110, 214])
     t_members.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), colors.HexColor("#1E293B")),
         ('GRID', (0,0), (-1,-1), 0.5, colors.HexColor("#CBD5E1")),
@@ -473,10 +473,10 @@ def generate_milestone2_pdf(filepath):
     
     contrib_data = [
         [Paragraph("Member Name", styles['TableHead']), Paragraph("Enrollment No.", styles['TableHead']), Paragraph("Role", styles['TableHead']), Paragraph("Tasks Done in Milestone 2", styles['TableHead']), Paragraph("Evidence (Commits / Files)", styles['TableHead']), Paragraph("Contrib (%)", styles['TableHead'])],
-        [Paragraph("Palmer Singh", styles['TableCellBold']), Paragraph("S24CSEU1001", styles['TableCellCenter']), Paragraph("Team Leader / NLP Engineer", styles['TableCell']), Paragraph("Core engine architecture, LAG() window functions, conversational DDL synthesizer, hot-reload server.", styles['TableCell']), Paragraph("<code>engine/nl2sql.py</code>, <code>server.py</code>, 18 commits", styles['TableCell']), Paragraph("<b>30%</b>", styles['TableCellCenter'])],
-        [Paragraph("Aarav Sharma", styles['TableCellBold']), Paragraph("S24CSEU1002", styles['TableCellCenter']), Paragraph("Frontend Engineer", styles['TableCell']), Paragraph("Web UI redesign, dark/light theme toggle, syntax highlighter placeholder fix, query history.", styles['TableCell']), Paragraph("<code>static/index.html</code>, 8 commits", styles['TableCell']), Paragraph("<b>25%</b>", styles['TableCellCenter'])],
-        [Paragraph("Rohan Verma", styles['TableCellBold']), Paragraph("S24CSEU1003", styles['TableCellCenter']), Paragraph("Prompt Engineer", styles['TableCell']), Paragraph("Prompt sheets P1-P3, prompt iteration logs v1-v3, Chain-of-Thought few-shot examples.", styles['TableCell']), Paragraph("<code>prompts/</code>, 6 commits, Prompt P2", styles['TableCell']), Paragraph("<b>25%</b>", styles['TableCellCenter'])],
-        [Paragraph("Sneha Patel", styles['TableCellBold']), Paragraph("S24CSEU1004", styles['TableCellCenter']), Paragraph("QA & Safety Engineer", styles['TableCell']), Paragraph("12-case test suite (Normal/Edge/Invalid), safety risk auditor rules, CHANGELOG and docs.", styles['TableCell']), Paragraph("<code>test-data/</code>, <code>CHANGELOG.md</code>, 5 commits", styles['TableCell']), Paragraph("<b>20%</b>", styles['TableCellCenter'])],
+        [Paragraph("Palmer Singh Soodan", styles['TableCellBold']), Paragraph("S24CSEU2165", styles['TableCellCenter']), Paragraph("Team Leader / NLP Engineer", styles['TableCell']), Paragraph("Core engine architecture, LAG() window functions, conversational DDL synthesizer, hot-reload server.", styles['TableCell']), Paragraph("<code>engine/nl2sql.py</code>, <code>server.py</code>, 18 commits", styles['TableCell']), Paragraph("<b>30%</b>", styles['TableCellCenter'])],
+        [Paragraph("Maulik Mani Awasthi", styles['TableCellBold']), Paragraph("S24CSEU2171", styles['TableCellCenter']), Paragraph("Frontend Engineer", styles['TableCell']), Paragraph("Web UI redesign, dark/light theme toggle, syntax highlighter placeholder fix, query history.", styles['TableCell']), Paragraph("<code>static/index.html</code>, 8 commits", styles['TableCell']), Paragraph("<b>25%</b>", styles['TableCellCenter'])],
+        [Paragraph("Arjit Jain", styles['TableCellBold']), Paragraph("S24CSEU2161", styles['TableCellCenter']), Paragraph("Prompt Engineer", styles['TableCell']), Paragraph("Prompt sheets P1-P3, prompt iteration logs v1-v3, Chain-of-Thought few-shot examples.", styles['TableCell']), Paragraph("<code>prompts/</code>, 6 commits, Prompt P2", styles['TableCell']), Paragraph("<b>25%</b>", styles['TableCellCenter'])],
+        [Paragraph("Raghav Chandra", styles['TableCellBold']), Paragraph("S24CSEU2882", styles['TableCellCenter']), Paragraph("QA & Safety Engineer", styles['TableCell']), Paragraph("12-case test suite (Normal/Edge/Invalid), safety risk auditor rules, CHANGELOG and docs.", styles['TableCell']), Paragraph("<code>test-data/</code>, <code>CHANGELOG.md</code>, 5 commits", styles['TableCell']), Paragraph("<b>20%</b>", styles['TableCellCenter'])],
         [Paragraph("<b>TOTAL</b>", styles['TableCellBold']), Paragraph("", styles['TableCellCenter']), Paragraph("", styles['TableCell']), Paragraph("<b>Full team agreement confirmed.</b>", styles['TableCellBold']), Paragraph("", styles['TableCell']), Paragraph("<b>100%</b>", styles['TableCellCenter'])],
     ]
     t_contrib = Table(contrib_data, colWidths=[80, 75, 95, 125, 95, 34])
@@ -525,7 +525,7 @@ def generate_supporting_doc(filepath):
         [Paragraph("Team ID:", styles['CoverLabel']), Paragraph("<b>T14</b> (QueryCrafters)", styles['CoverVal'])],
         [Paragraph("Project Title:", styles['CoverLabel']), Paragraph("NL2SQL Studio — Natural Language to SQL Assistant", styles['CoverVal'])],
         [Paragraph("Document Type:", styles['CoverLabel']), Paragraph("Technical Report (Architecture, Prompt Design, Tests, Limitations)", styles['CoverVal'])],
-        [Paragraph("Authors:", styles['CoverLabel']), Paragraph("Palmer Singh, Aarav Sharma, Rohan Verma, Sneha Patel (Batch B13-24)", styles['CoverVal'])],
+        [Paragraph("Authors:", styles['CoverLabel']), Paragraph("Maulik Mani Awasthi, Arjit Jain, Palmer Singh Soodan, Raghav Chandra (Batch B13-24)", styles['CoverVal'])],
     ]
     t_meta = Table(meta_info, colWidths=[110, 394])
     t_meta.setStyle(TableStyle([
