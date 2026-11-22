@@ -8,9 +8,10 @@ NL2SQL Studio converts plain English questions into production-grade, dialect-aw
 - **Video Reel Demo**: [https://drive.google.com/file/d/1Vswp081gceSOKoQKcdLXIBzH5k_Gwkaq/view?usp=drive_link](https://drive.google.com/file/d/1Vswp081gceSOKoQKcdLXIBzH5k_Gwkaq/view?usp=drive_link)
 
 ## 👥 Team Details
-- **Team ID**: T14
-- **Team Name**: QueryCrafters
-- **Batch**: B13-24
+- **Team ID**: PE-B81-17
+- **Team Name**: THE MYTHIC
+- **Batch**: Batch 83
+- **Faculty Guide**: Dr. Inderjeet Gupta (SCSE4041)
 - **Team Members**:
   - `S24CSEU2171` — **Maulik Mani Awasthi** (Team Leader, Project Management & Pipeline Architecture)
   - `S24CSEU2165` — **Palmer Singh Soodan** (Frontend & NLP Engineer, Core Engine & Web Studio UI)
@@ -64,8 +65,8 @@ NLP-TO-SQL/
 │   └── test_results.json   # Recorded outputs and Pass/Fail evaluations
 └── docs/
     ├── diagrams/           # Workflow and architecture diagrams
-    ├── M2_T14_NL2SQLStudio.pdf   # Official Milestone 2 Submission PDF
-    └── QueryCrafters_TechnicalReport.pdf # Supporting Document
+    ├── M2_PE-B81-17_NL2SQLStudio.pdf   # Official Milestone 2 Submission PDF
+    └── TheMythic_TechnicalReport.pdf   # Supporting Technical Report
 ```
 
 ---

@@ -37,7 +37,7 @@ class NumberedCanvas(canvas.Canvas):
         
         # Header (pages > 1)
         if self._pageNumber > 1:
-            self.drawString(54, 755, "SCSE4041 Mini Project — Milestone 2 | Team T14: NL2SQL Studio")
+            self.drawString(54, 755, "SCSE4041 Mini Project — Milestone 2 | Team PE-B81-17: NL2SQL Studio")
             self.setStrokeColor(colors.HexColor("#CBD5E1"))
             self.setLineWidth(0.5)
             self.line(54, 748, 558, 748)
@@ -103,11 +103,11 @@ def generate_milestone2_pdf(filepath):
     story.append(HRFlowable(width="100%", thickness=1.5, color=colors.HexColor("#4F46E5"), spaceAfter=18))
     
     cover_info = [
-        [Paragraph("Team ID:", styles['CoverLabel']), Paragraph("<b>T14</b>", styles['CoverVal'])],
-        [Paragraph("Team Name:", styles['CoverLabel']), Paragraph("QueryCrafters", styles['CoverVal'])],
+        [Paragraph("Team ID:", styles['CoverLabel']), Paragraph("<b>PE-B81-17</b>", styles['CoverVal'])],
+        [Paragraph("Team Name:", styles['CoverLabel']), Paragraph("THE MYTHIC", styles['CoverVal'])],
         [Paragraph("Project Title:", styles['CoverLabel']), Paragraph("NL2SQL Studio: Local & Schema-Grounded NL-to-SQL Assistant", styles['CoverVal'])],
-        [Paragraph("Batch / Group:", styles['CoverLabel']), Paragraph("B13-24", styles['CoverVal'])],
-        [Paragraph("Course Faculty:", styles['CoverLabel']), Paragraph("Dr. Sonal Sharma (SCSE4041)", styles['CoverVal'])],
+        [Paragraph("Batch / Group:", styles['CoverLabel']), Paragraph("Batch 83", styles['CoverVal'])],
+        [Paragraph("Course Faculty:", styles['CoverLabel']), Paragraph("Dr. Inderjeet Gupta (SCSE4041)", styles['CoverVal'])],
         [Paragraph("Prototype Link (Q11):", styles['CoverLabel']), Paragraph("<u>http://localhost:8765</u> (Local Live Server; Hosted: <u>https://palmersingh50-nl2sql.hf.space</u>)", styles['CoverVal'])],
         [Paragraph("GitHub Repository (Q12):", styles['CoverLabel']), Paragraph("<u>https://github.com/palmersingh50-maker/NLP-TO-SQL</u>", styles['CoverVal'])],
         [Paragraph("Video Reel Link (Q13):", styles['CoverLabel']), Paragraph("<u>https://drive.google.com/file/d/1Vswp081gceSOKoQKcdLXIBzH5k_Gwkaq/view?usp=drive_link</u>", styles['CoverVal'])],
@@ -493,7 +493,7 @@ def generate_milestone2_pdf(filepath):
     
     story.append(Paragraph("<b>Team Agreement & Declarations:</b>", styles['SubSecHeading']))
     decl_text = (
-        "• We confirm that this submission represents original work developed by Team T14 for SCSE4041.<br/>"
+        "• We confirm that this submission represents original work developed by Team PE-B81-17 (THE MYTHIC) for SCSE4041.<br/>"
         "• Every team member has reviewed their assigned tasks, verified their evidence in the GitHub repository, and consented to the contribution percentages above.<br/>"
         "• All links provided (Prototype, GitHub, and Video Reel) are public and accessible without authentication gates."
     )
@@ -522,10 +522,10 @@ def generate_supporting_doc(filepath):
     story.append(HRFlowable(width="100%", thickness=1.5, color=colors.HexColor("#4F46E5"), spaceAfter=14))
     
     meta_info = [
-        [Paragraph("Team ID:", styles['CoverLabel']), Paragraph("<b>T14</b> (QueryCrafters)", styles['CoverVal'])],
+        [Paragraph("Team ID:", styles['CoverLabel']), Paragraph("<b>PE-B81-17</b> (THE MYTHIC)", styles['CoverVal'])],
         [Paragraph("Project Title:", styles['CoverLabel']), Paragraph("NL2SQL Studio — Natural Language to SQL Assistant", styles['CoverVal'])],
         [Paragraph("Document Type:", styles['CoverLabel']), Paragraph("Technical Report (Architecture, Prompt Design, Tests, Limitations)", styles['CoverVal'])],
-        [Paragraph("Authors:", styles['CoverLabel']), Paragraph("Maulik Mani Awasthi, Arjit Jain, Palmer Singh Soodan, Raghav Chandra (Batch B13-24)", styles['CoverVal'])],
+        [Paragraph("Authors:", styles['CoverLabel']), Paragraph("Maulik Mani Awasthi, Arjit Jain, Palmer Singh Soodan, Raghav Chandra (Batch 83)", styles['CoverVal'])],
     ]
     t_meta = Table(meta_info, colWidths=[110, 394])
     t_meta.setStyle(TableStyle([
@@ -579,7 +579,13 @@ def generate_supporting_doc(filepath):
 if __name__ == "__main__":
     out_dir = "/Users/palmersingh/Desktop/nl2sql-studio/docs"
     os.makedirs(out_dir, exist_ok=True)
-    m2_pdf = os.path.join(out_dir, "M2_T14_NL2SQLStudio.pdf")
-    sup_pdf = os.path.join(out_dir, "QueryCrafters_TechnicalReport.pdf")
-    generate_milestone2_pdf(m2_pdf)
-    generate_supporting_doc(sup_pdf)
+    m2_pdf_official = os.path.join(out_dir, "M2_PE-B81-17_NL2SQLStudio.pdf")
+    sup_pdf_official = os.path.join(out_dir, "TheMythic_TechnicalReport.pdf")
+    
+    generate_milestone2_pdf(m2_pdf_official)
+    generate_supporting_doc(sup_pdf_official)
+    
+    # Also keep standard alias files
+    import shutil
+    shutil.copyfile(m2_pdf_official, os.path.join(out_dir, "M2_T14_NL2SQLStudio.pdf"))
+    shutil.copyfile(sup_pdf_official, os.path.join(out_dir, "QueryCrafters_TechnicalReport.pdf"))
