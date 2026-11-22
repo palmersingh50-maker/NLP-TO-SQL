@@ -12,9 +12,9 @@ NL2SQL Studio converts plain English questions into production-grade, dialect-aw
 - **Team Name**: QueryCrafters
 - **Batch**: B13-24
 - **Team Members**:
-  - `S24CSEU2171` — **Maulik Mani Awasthi** (Frontend UI, Syntax Highlighter & History Storage)
+  - `S24CSEU2171` — **Maulik Mani Awasthi** (Team Leader, Project Management & Pipeline Architecture)
+  - `S24CSEU2165` — **Palmer Singh Soodan** (Frontend & NLP Engineer, Core Engine & Web Studio UI)
   - `S24CSEU2161` — **Arjit Jain** (Prompt Engineering, Iteration Logs & Evaluation)
-  - `S24CSEU2165` — **Palmer Singh Soodan** (Team Leader, Engine Architecture & NLP Pipeline)
   - `S24CSEU2882` — **Raghav Chandra** (Testing Suite, Edge Cases & Safety Auditor)
 
 ---
